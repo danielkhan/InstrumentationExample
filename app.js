@@ -1,7 +1,12 @@
+
+
+// CPU Profiling
 // require('./monitoring/CpuProfiler').init('./public/metrics');
+
+// Heap Dumps and Metrics
 // require('./monitoring/HeapDump').init('./public/metrics');
-var createNamespace = require('continuation-local' + '-storage').createNamespace;
-var asyncCallbackMiddleware = require('./monitoring/AsyncCallbackMiddleware');
+
+// See below for callback timings
 
 
 
@@ -19,7 +24,9 @@ var todo = require('./routes/todo');
 
 var app = express();
 
-// Switch on callback listener
+// Callback timings
+var asyncCallbackMiddleware = require('./monitoring/AsyncCallbackMiddleware');
+var createNamespace = require('continuation-local' + '-storage').createNamespace;
 app.use(asyncCallbackMiddleware);
 
 // view engine setup

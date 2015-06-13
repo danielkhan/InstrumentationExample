@@ -10,6 +10,14 @@ var fs = require('fs');
 var profiler = require('v8-profiler');
 var _datadir = null;
 var nextMBThreshold = 0;
+var gcprofiler = require('gc-profiler');
+
+// Listen to GC events
+gcprofiler.on('gc', function (info) {
+    console.log('GC happened');
+    console.log(info);
+});
+
 
 /**
  * Init and scheule heap dump runs
