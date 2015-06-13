@@ -45,7 +45,7 @@ router.get('/', function (req, res, next) {
         .accept('json')
         .end(function (e, r) {
             // primCalculator(10000, 50000);
-            replaceThing();
+            // replaceThing();
             if (e) return next(e);
 
             res.render('index', {
