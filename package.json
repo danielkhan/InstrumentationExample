@@ -1,0 +1,20 @@
+{
+  "name": "NodeShowcase",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.12.4",
+    "continuation-local-storage": "^3.1.4",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.12.4",
+    "jade": "~1.9.2",
+    "less-middleware": "1.0.x",
+    "morgan": "~1.5.3",
+    "serve-favicon": "~2.2.1",
+    "superagent": "^1.2.0"
+  }
+}
