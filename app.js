@@ -25,9 +25,9 @@ var todo = require('./routes/todo');
 var app = express();
 
 // Callback timings
-var asyncCallbackMiddleware = require('./monitoring/AsyncCallbackMiddleware');
-var createNamespace = require('continuation-local' + '-storage').createNamespace;
-app.use(asyncCallbackMiddleware);
+// var asyncCallbackMiddleware = require('./monitoring/AsyncCallbackMiddleware');
+// var createNamespace = require('continuation-local' + '-storage').createNamespace;
+// app.use(asyncCallbackMiddleware);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
