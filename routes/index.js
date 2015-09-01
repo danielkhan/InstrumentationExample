@@ -7,7 +7,7 @@ var fs = require('fs');
 
 require('../monitoring/gc').init(time);
 
-fs.writeFile("/tmp/memory", 'Start;RSS;HeapTotal;HeapUsed\n', function (err) {
+fs.writeFile("/tmp/memory.csv", 'Start;RSS;HeapTotal;HeapUsed\n', function (err) {
     if (err) {
         return console.log(err);
     }
@@ -60,7 +60,7 @@ router.get('/', function (req, res, next) {
             var mem = process.memoryUsage();
             var diff = process.hrtime(time);
             var ms = diff[0] * 1e9 + diff[1];
-            fs.appendFile("/tmp/memory", ms + ';' + mem.rss + ';' + mem.heapTotal + ';' + mem.heapUsed + "\n", function (err) {
+            fs.appendFile("/tmp/memory.csv", ms + ';' + mem.rss + ';' + mem.heapTotal + ';' + mem.heapUsed + "\n", function (err) {
                 if (err) {
                     return console.log(err);
                 }
