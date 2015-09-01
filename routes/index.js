@@ -7,7 +7,7 @@ var fs = require('fs');
 
 require('../monitoring/gc').init(time);
 
-fs.writeFile("/tmp/memory", 'Start;RSSHeapTotal;HeapUsed\n', function (err) {
+fs.writeFile("/tmp/memory", 'Start;RSS;HeapTotal;HeapUsed\n', function (err) {
     if (err) {
         return console.log(err);
     }

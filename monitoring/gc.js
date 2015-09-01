@@ -24,7 +24,7 @@ module.exports.init = function (time) {
         var diff = process.hrtime(time);
         var ms = diff[0] * 1e9 + diff[1];
 
-        fs.appendFile("/tmp/gc_", (ms - info.duration * 1000) + ';' + (info.duration * 1000) + "\n", function (err) {
+        fs.appendFile("/tmp/gc_" + info.type, (ms - info.duration * 1000) + ';' + (info.duration * 1000) + "\n", function (err) {
             if (err) {
                 return console.log(err);
             }
