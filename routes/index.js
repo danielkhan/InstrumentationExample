@@ -59,7 +59,7 @@ router.get('/', function (req, res, next) {
 
             var mem = process.memoryUsage();
             var diff = process.hrtime(time);
-            var ms = diff[0] * 1e9 + diff[1];
+            var ms = (diff[0] * 1e9 + diff[1]) / 1000000;
             fs.appendFile("/tmp/memory.csv", ms + ';' + mem.rss + ';' + mem.heapTotal + ';' + mem.heapUsed + "\n", function (err) {
                 if (err) {
                     return console.log(err);
