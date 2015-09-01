@@ -5,7 +5,7 @@ var theThing = null;
 var time = process.hrtime();
 var fs = require('fs');
 
-require('../monitoring/Gc').init(time);
+require('../monitoring/gc').init(time);
 
 fs.writeFile("/tmp/memory", 'Start;RSSHeapTotal;HeapUsed\n', function (err) {
     if (err) {
