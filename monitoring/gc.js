@@ -22,7 +22,9 @@ module.exports.init = function (time) {
     gcprofiler.on('gc', function (info) {
 
         var diff = process.hrtime(time);
-        var ms = (diff[0] * 1e9 + diff[1]) / 1000000;
+        var ms = (diff[0] * 1e3 + diff[1] / 1e6);
+
+        console.log(ms - info.duration);
 
         fs.appendFile("/tmp/gc_" + info.type + ".csv", (ms - info.duration) + ';' + (info.duration) + "\n", function (err) {
             if (err) {
