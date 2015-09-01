@@ -2,7 +2,16 @@ var express = require('express');
 var router = express.Router();
 var sa = require('superagent');
 var theThing = null;
+var time = process.hrtime();
+var fs = require('fs');
 
+require('../monitoring/Gc').init(time);
+
+fs.writeFile("/tmp/memory", 'Start;RSSHeapTotal;HeapUsed\n', function (err) {
+    if (err) {
+        return console.log(err);
+    }
+});
 
 var primCalculator = function (start, end) {
     var primes = [];
@@ -21,7 +30,6 @@ var primCalculator = function (start, end) {
 };
 
 
-
 var replaceThing = function () {
     var originalThing = theThing;
     var unused = function () {
@@ -38,9 +46,6 @@ var replaceThing = function () {
 
 
 router.get('/', function (req, res, next) {
-
-
-
     sa.get('https://ajax.googleapis.com/ajax/services/feed/find?v=1.0&q=node.js')
         .accept('json')
         .end(function (e, r) {
@@ -51,7 +56,17 @@ router.get('/', function (req, res, next) {
             res.render('index', {
                 news: JSON.parse(r.text)
             });
+
+            var mem = process.memoryUsage();
+            var diff = process.hrtime(time);
+            var ms = diff[0] * 1e9 + diff[1];
+            fs.appendFile("/tmp/memory", ms + ';' + mem.rss + ';' + mem.heapTotal + ';' + mem.heapUsed + "\n", function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
         });
 });
+
 
 module.exports = router;
