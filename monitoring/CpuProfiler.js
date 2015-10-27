@@ -46,7 +46,7 @@ function startProfiling() {
  */
 function stopProfiling(id) {
     var profile = profiler.stopProfiling(id);
-    fs.writeFile(_datadir + '/' + id + '.cpuprofile.json', JSON.stringify(profile), function () {
+    fs.writeFile(_datadir + '/' + id + '.cpuprofile', JSON.stringify(profile), function () {
         console.log('Profiler data written');
     });
 }

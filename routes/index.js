@@ -5,13 +5,15 @@ var theThing = null;
 var time = process.hrtime();
 var fs = require('fs');
 
-require('../monitoring/gc').init(time);
+// require('../monitoring/gc').init(time);
 
+/*
 fs.writeFile("/tmp/memory.csv", 'Start;RSS;HeapTotal;HeapUsed\n', function (err) {
     if (err) {
         return console.log(err);
     }
 });
+*/
 
 var primCalculator = function (start, end) {
     var primes = [];
@@ -57,6 +59,7 @@ router.get('/', function (req, res, next) {
                 news: JSON.parse(r.text)
             });
 
+            /*
             var mem = process.memoryUsage();
             var diff = process.hrtime(time);
             var ms = (diff[0] * 1e3 + diff[1] / 1e6);
@@ -68,6 +71,7 @@ router.get('/', function (req, res, next) {
                     return console.log(err);
                 }
             });
+            */
         });
 });
 

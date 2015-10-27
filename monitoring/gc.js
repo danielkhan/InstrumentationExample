@@ -1,18 +1,30 @@
 var gcprofiler = require('gc-profiler');
 var fs = require('fs');
 
+var _datadir = null;
+
+module.exports.init = function (datadir) {
 
 
-module.exports.init = function (time) {
+    var stamp = Date.now();
+    var time = process.hrtime();
+    var runId = Math.round(time[0] * 1e3 + time[1] / 1e6);
+    _datadir = datadir + '/' + runId + '_';
 
-
-    fs.writeFile("/tmp/gc_Scavenge.csv", 'Start;Duration\n', function (err) {
+    // Preparing CSV files
+    fs.writeFile(_datadir + 'gc_Scavenge.csv', 'Start;Duration\n', function (err) {
         if (err) {
             return console.log(err);
         }
     });
 
-    fs.writeFile("/tmp/gc_MarkSweepCompact.csv", 'Start;Duration\n', function (err) {
+    fs.writeFile(_datadir + 'gc_MarkSweepCompact.csv', 'Start;Duration\n', function (err) {
+        if (err) {
+            return console.log(err);
+        }
+    });
+
+    fs.writeFile(_datadir + 'memory.csv', 'Start;RSS;HeapTotal;HeapUsed\n', function (err) {
         if (err) {
             return console.log(err);
         }
@@ -23,13 +35,29 @@ module.exports.init = function (time) {
 
         var diff = process.hrtime(time);
         var ms = (diff[0] * 1e3 + diff[1] / 1e6);
-
-        console.log(ms - info.duration);
-
-        fs.appendFile("/tmp/gc_" + info.type + ".csv", (ms - info.duration) + ';' + (info.duration) + "\n", function (err) {
+        fs.appendFile(_datadir + 'gc_' + info.type + ".csv", (ms - info.duration) + ';' + (info.duration) + "\n", function (err) {
             if (err) {
                 return console.log(err);
             }
         });
+
     });
+
+
+    var profileMemory = function () {
+        var mem = process.memoryUsage();
+        var diff = process.hrtime(time);
+        var ms = (diff[0] * 1e3 + diff[1] / 1e6);
+        // console.log('append');
+        fs.appendFile(_datadir + "memory.csv", ms + ';' + mem.rss + ';' + mem.heapTotal + ';' + mem.heapUsed + "\n", function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    };
+
+    // Profile memory every x ms
+    setInterval(function () {
+        profileMemory()
+    }, 5000);
 };

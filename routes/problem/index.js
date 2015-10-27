@@ -9,7 +9,7 @@ var replaceThing = function () {
         if (originalThing) console.log("hi");
     };
     theThing = {
-        longStr: new Array(1000000).join('*'),
+        longStr: new Array(100).join('*'),
         someMethod: function () {
             console.log('someMessage');
         }
@@ -21,26 +21,26 @@ var replaceThing = function () {
 var replaceThingSane = function () {
     var originalThing = theThing;
     var unused = function () {
-        if (originalThing) console.log("hi");
+        // if (originalThing) console.log("hi");
     };
     theThing = {
-        longStr: new Array(1000000).join('*'),
+        longStr: new Array(100).join('*'),
         someMethod: function () {
             console.log('someMessage');
         }
     };
-    theThing = null;
+
 };
 
 
 router.get('/leak', function (req, res, next) {
     replaceThing();
-    return res.json({message: 'Everything is fine!'})
+    return res.json({message: 'Everything is not so fine!'})
 });
 
 
 router.get('/leak-sane', function (req, res, next) {
-    replaceThing();
+    replaceThingSane();
     return res.json({message: 'Everything is fine!'})
 });
 
@@ -62,7 +62,7 @@ var primCalculator = function (start, end) {
 
 router.get('/blocking', function (req, res, next) {
 
-    return res.json(primCalculator(10000, 100000));
+    return res.json(primCalculator(10000, 50000));
 });
 
 

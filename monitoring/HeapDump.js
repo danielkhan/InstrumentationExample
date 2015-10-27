@@ -10,13 +10,6 @@ var fs = require('fs');
 var profiler = require('v8-profiler');
 var _datadir = null;
 var nextMBThreshold = 0;
-var gcprofiler = require('gc-profiler');
-
-// Listen to GC events
-gcprofiler.on('gc', function (info) {
-    console.log('GC happened');
-    console.log(info);
-});
 
 
 /**
@@ -26,7 +19,7 @@ gcprofiler.on('gc', function (info) {
  */
 module.exports.init = function (datadir) {
     _datadir = datadir;
-    setInterval(tickHeapDump, 5 * 1000);
+    setInterval(tickHeapDump, 500);
 };
 
 /**
@@ -43,9 +36,12 @@ function tickHeapDump() {
  */
 function heapDump() {
     var memMB = process.memoryUsage().rss / 1048576;
+
+    console.log(memMB + '>' + nextMBThreshold);
+
     if (memMB > nextMBThreshold) {
         console.log('Current memory usage: %j', process.memoryUsage());
-        nextMBThreshold += 100;
+        nextMBThreshold += 50;
         var snap = profiler.takeSnapshot('profile');
         saveHeapSnapshot(snap, _datadir);
     }
