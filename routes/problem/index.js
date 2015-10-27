@@ -35,13 +35,17 @@ var replaceThingSane = function () {
 
 router.get('/leak', function (req, res, next) {
     replaceThing();
-    return res.json({message: 'Everything is not so fine!'})
+    res.render('index', {
+        news: {}
+    });
 });
 
 
 router.get('/leak-sane', function (req, res, next) {
     replaceThingSane();
-    return res.json({message: 'Everything is fine!'})
+    res.render('index', {
+        news: {}
+    });
 });
 
 var primCalculator = function (start, end) {
