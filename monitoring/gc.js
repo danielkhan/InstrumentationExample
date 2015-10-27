@@ -59,5 +59,5 @@ module.exports.init = function (datadir) {
     // Profile memory every x ms
     setInterval(function () {
         profileMemory()
-    }, 500);
+    }, 100);
 };
